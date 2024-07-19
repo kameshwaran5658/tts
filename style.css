@@ -1,0 +1,108 @@
+.navbar {
+    background-color: #007bff !important; /* Blue */
+}
+
+.navbar-brand,
+.navbar-nav .nav-link {
+    color: #fff !important;
+}
+
+.navbar-toggler-icon {
+    background-color: #fff !important;
+}
+
+@media screen and (max-width: 576px) {
+    .navbar-nav .nav-link {
+        color: #fff !important;
+    }
+}
+
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+    background-size: cover;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+}
+
+.text-input {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+}
+
+.btn-text-to-speech {
+    background-color: #28a745; /* Green */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-text-to-speech:hover {
+    background-color: #218838; /* Darker green */
+}
+
+.speech-output {
+    margin-top: 20px;
+}
+
+.voice-settings {
+    margin-bottom: 20px;
+}
+
+#voice-select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+}
+
+.marker {
+    display: inline-block;
+    background-color: #ffc107; /* Yellow */
+    padding: 2px;
+    border-radius: 2px;
+}
+
+/* Add transitions for smooth animation */
+.buttons, .voice-settings {
+    transition: all 0.3s ease;
+}
+
+/* Add hover effect for buttons */
+.buttons button:hover {
+    transform: scale(1.05);
+}
+
+/* Add keyframes for scalable animation */
+@keyframes readingAnimation {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Apply animation to speech output */
+.speech-output {
+    margin-top: 20px;
+    animation: readingAnimation 2s infinite;
+    white-space: pre-wrap; /* Ensure all text is displayed */
+}
+.btn-reset {
+    margin-top: 10px;
+}

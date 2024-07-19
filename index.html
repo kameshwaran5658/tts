@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text-to-Speech</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <!-- Custom CSS -->
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">K-Text-to-Speech</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link animate__animated animate__fadeInDown" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link animate__animated animate__fadeInDown" href="index.html">TTS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link animate__animated animate__fadeInDown" href="sst.html">STT</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h2 class="text-center animate__animated animate__bounceInDown"><i class="fas fa-microphone-alt"></i> K-Text-to-Speech</h2>
+    <textarea id="text-input" class="text-input"></textarea>
+    <div class="voice-settings animate__animated animate__fadeInLeft">
+      <label for="voice-select"><i class="fas fa-volume-up"></i> Select Voice Variant:</label>
+      <select id="voice-select" class="form-control">
+        <!-- Voice options will be dynamically populated here -->
+      </select>
+      <label for="speech-speed">Speech Speed:</label>
+      <input type="range" min="0.1" max="2" value="1" step="0.1" id="speech-speed">
+      <label for="speech-pitch">Speech Pitch:</label>
+      <input type="range" min="0.1" max="2" value="1" step="0.1" id="speech-pitch">
+      <button id="btn-reset" class="btn btn-secondary mt-3">Reset Speed & Pitch</button>
+    </div>
+    <div class="buttons animate__animated animate__fadeInRight">
+      <button id="btn-text-to-speech" class="btn btn-text-to-speech">
+        <i class="fas fa-play"></i> Convert to Speech
+      </button>
+      <button id="btn-stop" class="btn btn-danger">
+        <i class="fas fa-stop"></i> Stop
+      </button>
+      <button id="btn-clear" class="btn btn-secondary">
+        <i class="fas fa-trash"></i> Clear
+      </button>
+    </div>
+    <div id="error-message" class="error-message animate__animated"></div>
+    <div id="speech-output" class="speech-output"></div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- Custom JS -->
+  <script src="t.js"></script>
+</body>
+</html>

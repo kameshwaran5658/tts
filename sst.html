@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Speech to Text</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .navbar {
+            background-color: #007bff !important;
+        }
+
+        .navbar-brand {
+            color: #fff !important;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px 0;
+            animation: fadeInDown 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 24px;
+            margin: 0;
+            animation: slideFromTop 1s ease;
+        }
+
+        @keyframes slideFromTop {
+            0% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        #input-text {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 10px;
+            padding: 10px;
+            animation: slideFromRight 1s ease;
+        }
+
+        @keyframes slideFromRight {
+            0% {
+                transform: translateX(200px);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        .btn {
+            margin-right: 10px;
+            animation: slideFromLeft 1s ease;
+        }
+
+        @keyframes slideFromLeft {
+            0% {
+                transform: translateX(-200px);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        #output {
+            margin-top: 20px;
+        }
+
+        @media (max-width: 576px) {
+            .btn {
+                margin-bottom: 10px;
+            }
+        }
+
+        .animated {
+            animation-duration: 1s;
+            animation-fill-mode: both;
+        }
+
+        .fadeInUp {
+            animation-name: fadeInUp;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#"><i class="fas fa-microphone-alt"></i> K-Speech to Text</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="sst.html">STT</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">TTS</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <div class="container">
+            <header class="animated fadeInUp">
+                <h1><i class="fas fa-volume-up"></i> <b>K-Speech to Text</b></h1>
+            </header>
+            <div id="content">
+                <textarea id="input-text" placeholder="Speak here..."></textarea>
+                <button id="start-btn" class="btn btn-primary animated fadeInUp"><i class="fas fa-play"></i> Start Recording</button>
+                <button id="stop-btn" class="btn btn-danger animated fadeInUp"><i class="fas fa-stop"></i> Stop Recording</button>
+                <button id="copy-btn" class="btn btn-info animated fadeInUp"><i class="fas fa-copy"></i> Copy Text</button>
+                <button id="clear-btn" class="btn btn-secondary animated fadeInUp"><i class="fas fa-times"></i> Clear Text</button>
+            </div>
+            <div id="output"></div>
+        </div>
+    </main>
+
+    <script>
+        const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+        recognition.continuous = true;
+        recognition.interimResults = true;
+
+        const output = document.getElementById('output');
+        const startBtn = document.getElementById('start-btn');
+        const stopBtn = document.getElementById('stop-btn');
+        const copyBtn = document.getElementById('copy-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const inputText = document.getElementById('input-text');
+
+        startBtn.addEventListener('click', () => {
+            recognition.start();
+        });
+
+        stopBtn.addEventListener('click', () => {
+            recognition.stop();
+        });
+
+        copyBtn.addEventListener('click', () => {
+            inputText.select();
+            document.execCommand('copy');
+            inputText.setSelectionRange(0, 0);
+            alert('Text copied to clipboard.');
+        });
+
+        clearBtn.addEventListener('click', () => {
+            inputText.value = '';
+            output.innerHTML = '';
+        });
+
+        recognition.onresult = (event) => {
+            let interimTranscript = '';
+            for (let i = event.resultIndex; i < event.results.length; ++i) {
+                if (event.results[i].isFinal) {
+                    inputText.value += event.results[i][0].transcript + ' ';
+                } else {
+                    interimTranscript += event.results[i][0].transcript;
+                }
+            }
+            output.innerHTML = interimTranscript;
+        };
+
+        recognition.onend = () => {
+            output.innerHTML = 'Recording stopped.';
+        };
+
+        recognition.onerror = (event) => {
+            output.innerHTML = `<div>Error: ${event.error}</div>`;
+        };
+        // Function to voice welcome message
+  function voiceWelcomeMessage() {
+    var welcomeMessage = "Welcome to K SPEECH TO TEXT CONVERTER";
+    var welcomeSpeech = new SpeechSynthesisUtterance(welcomeMessage);
+    window.speechSynthesis.speak(welcomeSpeech);
+  }
+  
+  // Voice welcome message on page load
+  voiceWelcomeMessage();
+  
+    </script>
+</body>
+</html>
